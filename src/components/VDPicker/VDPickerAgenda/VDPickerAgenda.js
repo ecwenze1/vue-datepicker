@@ -66,6 +66,7 @@ export default baseMixins.extend({
     validate: { type: Boolean, default: false },
     value: { type: Boolean, default: false },
     visibleYearsNumber: { type: Number },
+    highlightDate: { type: [Date, Object] },
   },
   data: () => ({
     height: 'auto',
@@ -371,6 +372,7 @@ export default baseMixins.extend({
           maxDate: this.maxDate,
           minDate: this.minDate,
           mutableDate: this.mutableDate,
+          highlightDate: this.highlightDate,
           range: this.range,
           transitionName: this.transitionDaysName,
         },

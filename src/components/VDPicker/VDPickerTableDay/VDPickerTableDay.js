@@ -34,15 +34,16 @@ export default baseMixins.extend({
     mutableDate: { type: [String, Object] },
     range: { type: Boolean },
     rangeCurrentHoveredDay: { type: String, default: undefined },
+    highlightDate: { type: [Date, Object] },
   },
   computed: {
     classes () {
       return {
         'vd-picker__table-day--selected': this.isSelected && !this.isDisabled,
-        'vd-picker__table-day--between': this.range && this.isBetween,
+        'vd-picker__table-day--between': (this.range && this.isBetween) || this.isHighlightBetween,
         'vd-picker__table-day--in-range': this.range && this.isInRange,
-        'vd-picker__table-day--first': this.range && this.firstInRange,
-        'vd-picker__table-day--last': this.range && this.lastInRange && Boolean(this.mutableDate.end),
+        'vd-picker__table-day--first': (this.range && this.firstInRange) || this.firstInHighlightRange,
+        'vd-picker__table-day--last': (this.range && this.lastInRange && Boolean(this.mutableDate.end)) || this.lastInHighlightRange,
         'vd-picker__table-day--select-start': this.range && !this.mutableDate.start,
         'vd-picker__table-day--select-end': this.range && this.mutableDate.start && !this.mutableDate.end,
         'vd-picker__table-day--disabled': this.isDisabled,
@@ -63,6 +64,12 @@ export default baseMixins.extend({
         const date = [
           ...(this.mutableDate.start ? [this.mutableDate.start.startOf('day').unix()] : []),
           ...(this.mutableDate.end ? [this.mutableDate.end.startOf('day').unix()] : []),
+        ];
+        return date.includes(this.day.unix());
+      } else if (this.highlightDate) {
+        const date = [
+          ...(this.highlightDate.start ? [this.highlightDate.start.startOf('day').unix()] : []),
+          ...(this.highlightDate.end ? [this.highlightDate.end.startOf('day').unix()] : []),
         ];
         return date.includes(this.day.unix());
       }
@@ -87,6 +94,18 @@ export default baseMixins.extend({
     lastInRange () {
       return this.mutableDate.end &&
         this.mutableDate.end.startOf('day').unix() === this.day.unix();
+    },
+    isHighlightBetween () {
+      if (!this.highlightDate.start && !this.highlightDate.end) return false;
+      return isBetweenDates(this.day, this.highlightDate.start, this.highlightDate.end);
+    },
+    firstInHighlightRange () {
+      return this.highlightDate.start &&
+        this.highlightDate.start.startOf('day').unix() === this.day.unix();
+    },
+    lastInHighlightRange () {
+      return this.highlightDate.end &&
+        this.highlightDate.end.startOf('day').unix() === this.day.unix();
     },
     isDateAllowed () {
       return isDateAllowed({

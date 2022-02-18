@@ -28,6 +28,7 @@ export default baseMixins.extend({
     maxDate: { type: [String, Number, Date] },
     minDate: { type: [String, Number, Date] },
     mutableDate: { type: [String, Object] },
+    highlightDate: { type: [Date, Object] },
     range: { type: Boolean },
     transitionName: { type: String },
   },
@@ -138,6 +139,7 @@ export default baseMixins.extend({
           range: this.range,
           rangeCurrentHoveredDay: this.rangeCurrentHoveredDay,
           locale: this.currentLocale,
+          highlightDate: this.highlightDate,
         },
         on: {
           'select-day': this.onDayClick,

@@ -99,6 +99,8 @@ export default baseMixins.extend({
     tabindex: { type: [String, Number], default: '0' },
     // Right to Left
     rtl: { type: Boolean, default: false },
+    // Highlight Range
+    highlightRange: { type: Object },
 
     // --> Menu Props
     // Allow to set origin
@@ -112,6 +114,7 @@ export default baseMixins.extend({
   },
   data: () => ({
     date: undefined,
+    highlightDate: undefined,
     isMenuActive: false,
     isBooted: false,
     activator: undefined,
@@ -158,6 +161,18 @@ export default baseMixins.extend({
       },
       set (date) {
         this.date = date;
+      },
+    },
+    internalHighlightDate: {
+      get () {
+        return initDate(this.highlightRange, {
+          range: true,
+          locale: this.currentLocale,
+          type: this.type,
+        });
+      },
+      set (date) {
+        this.highlightDate = date;
       },
     },
     isDateDefined () {
@@ -379,6 +394,7 @@ export default baseMixins.extend({
           range: this.range,
           rangeHeaderText: this.textsFormat.rangeHeaderText,
           rangePresets: this.rangePresets,
+          highlightDate: this.internalHighlightDate,
           rtl: this.rtl,
           type: this.type,
           validate: this.validate,
