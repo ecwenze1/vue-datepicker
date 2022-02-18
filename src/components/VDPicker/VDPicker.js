@@ -100,7 +100,7 @@ export default baseMixins.extend({
     // Right to Left
     rtl: { type: Boolean, default: false },
     // Highlight Range
-    highlightRange: { type: Object },
+    highlightRange: { type: Object, default: undefined },
 
     // --> Menu Props
     // Allow to set origin

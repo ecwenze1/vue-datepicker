@@ -34,7 +34,7 @@ export default baseMixins.extend({
     mutableDate: { type: [String, Object] },
     range: { type: Boolean },
     rangeCurrentHoveredDay: { type: String, default: undefined },
-    highlightDate: { type: [Date, Object] },
+    highlightDate: { type: [Date, Object], default: undefined },
   },
   computed: {
     classes () {
