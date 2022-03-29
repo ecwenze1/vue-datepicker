@@ -182,7 +182,7 @@ describe('VDPickerYears', () => {
 
       it.each([
         [{ min: undefined, max: undefined }, 2019, true],
-        [{ min: '2018', max: '2020' }, 2019, true],
+        [{ min: '2010', max: '2020' }, 2018, true],
         [{ min: '2020', max: '2020' }, 2019, false],
         [{ min: '2018', max: '2018' }, 2019, false],
         [{ allowedDates: allowedYear }, 2019, false],

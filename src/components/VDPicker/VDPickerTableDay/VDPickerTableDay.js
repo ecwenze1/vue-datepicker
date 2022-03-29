@@ -96,14 +96,18 @@ export default baseMixins.extend({
         this.mutableDate.end.startOf('day').unix() === this.day.unix();
     },
     isHighlightBetween () {
-      if (!this.highlightDate.start && !this.highlightDate.end) return false;
+      if (!this.highlightDate || (!this.highlightDate.start && !this.highlightDate.end)) {
+        return false;
+      }
       return isBetweenDates(this.day, this.highlightDate.start, this.highlightDate.end);
     },
     firstInHighlightRange () {
+      if (!this.highlightDate) return false;
       return this.highlightDate.start &&
         this.highlightDate.start.startOf('day').unix() === this.day.unix();
     },
     lastInHighlightRange () {
+      if (!this.highlightDate) return false;
       return this.highlightDate.end &&
         this.highlightDate.end.startOf('day').unix() === this.day.unix();
     },
